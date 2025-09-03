@@ -42,6 +42,11 @@ class $modify(CommentCell) {
 					log::info("yeah!!!");
 					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
 				}
+
+				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-label")) {
+					log::info("yeah!!!");
+					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
+				}
 			}
 
 			this->release();
