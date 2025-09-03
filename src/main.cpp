@@ -10,6 +10,8 @@ using namespace geode::event::v2;
 #include <Geode/modify/CommentCell.hpp>
 class $modify(CommentCell) {
 	void loadFromComment(GJComment* comm) {
+		CommentCell::loadFromComment(comm);
+
 		int id = comm->m_accountID;
 		std::string url = std::string("https://playerdata.hiimjasmine00.com/v2/") + std::to_string(id);
 
@@ -28,9 +30,6 @@ class $modify(CommentCell) {
 
 			this->release();
 		});
-
-
-		CommentCell::loadFromComment(comm);
 	}
 };
 
