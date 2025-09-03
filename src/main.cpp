@@ -9,6 +9,13 @@ using namespace geode::event::v2;
 
 #include <Geode/modify/CommentCell.hpp>
 class $modify(CommentCell) {
+
+	static void onModify(auto& self) {
+		if (!self.setHookPriorityAfterPost("CommentCell::loadFromComment", "prevter.comment_emojis")) {
+		    geode::log::warn("Failed to set hook priority.");
+		}
+	}
+
 	void loadFromComment(GJComment* comm) {
 		CommentCell::loadFromComment(comm);
 
@@ -32,7 +39,8 @@ class $modify(CommentCell) {
 				}
 
 				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-area")) {
-					reinterpret_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
+					log::info("yeah!!!");
+					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
 				}
 			}
 
