@@ -26,6 +26,10 @@ class $modify(CommentCell) {
 				if (auto node = this->getChildByIDRecursive("comment-text-area")) {
 					reinterpret_cast<TextArea*>(node)->colorAllLabels(color.unwrap());
 				}
+
+				if (auto node = this->getChildByIDRecursive("comment-text-label")) {
+					reinterpret_cast<CCLabelBMFont*>(node)->setColor(color.unwrap());
+				}
 			}
 
 			this->release();
@@ -35,12 +39,10 @@ class $modify(CommentCell) {
 
 
 $on_mod(Loaded) {
-	log::info("CHANGED COLOR");
 	auto col = Mod::get()->getSettingValue<ccColor3B>("comment-color");
 	user_data::upload(col, "camila314.comment-color");
 
 	new EventListener(+[](std::shared_ptr<SettingV3> thing) {
-		log::info("CHANGED COLOR");
 		auto col = Mod::get()->getSettingValue<ccColor3B>("comment-color");
 		user_data::upload(col, "camila314.comment-color");
 	}, SettingChangedFilterV3(Mod::get(), "comment-color"));
