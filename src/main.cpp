@@ -29,14 +29,14 @@ class $modify(CommentCell) {
 					reinterpret_cast<CCLabelBMFont*>(node)->setColor(color.unwrap());
 				}
 
-				if (auto node = typeinfo_cast<CCRGBAProtocol*>(this->getChildByIDRecursive("prevter.comment_emojis/comment-text-area"))) {
+				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-area")) {
 					log::info("yeah!!!");
-					node->setColor(color.unwrap());
+					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
 				}
 
-				if (auto node = typeinfo_cast<CCRGBAProtocol*>(this->getChildByIDRecursive("prevter.comment_emojis/comment-text-label"))) {
+				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-label")) {
 					log::info("yeah!!!");
-					node->setColor(color.unwrap());
+					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
 				}
 			}
 		}, comm->m_accountID);
