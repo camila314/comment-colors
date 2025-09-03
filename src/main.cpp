@@ -26,7 +26,7 @@ class $modify(CommentCell) {
 		});
 
 
-		this->CommentCell::loadFromComment(comm);
+		CommentCell::loadFromComment(comm);
 	}
 };
 
