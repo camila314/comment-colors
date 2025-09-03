@@ -30,6 +30,10 @@ class $modify(CommentCell) {
 				if (auto node = this->getChildByIDRecursive("comment-text-label")) {
 					reinterpret_cast<CCLabelBMFont*>(node)->setColor(color.unwrap());
 				}
+
+				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-area")) {
+					reinterpret_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
+				}
 			}
 
 			this->release();
