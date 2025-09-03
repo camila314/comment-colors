@@ -1,0 +1,36 @@
+{
+	"geode": "4.8.0",
+	"gd": {
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
+	},
+	"id": "camila314.comment-colors",
+	"name": "Comment Colors",
+	"version": "v1.0.0",
+	"developer": "camila314",
+	"description": "Custom comment colors",
+
+	"dependencies": [
+	    {
+	    	"id": "hiimjasmine00.user_data_api",
+	        "version": ">=v1.0.0",
+	        "importance": "required"
+	    },
+	    {
+			"id": "geode.node-ids",
+			"version": ">=v1.13.0",
+			"importance": "required"
+	    }
+	],
+
+	"settings": {
+		"comment-color": {
+			"name": "Comment Color",
+			"description": "Your comment color",
+			"type": "color",
+			"default": "FFFFFF"
+		}
+	}
+}
