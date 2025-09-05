@@ -1,5 +1,5 @@
 #include <Geode/Geode.hpp>
-#include <hiimjasmine00.user_data_api/include/events/Comment.hpp>
+#include <hiimjasmine00.user_data_api/include/Events.hpp>
 #include <hiimjasmine00.user_data_api/include/UserDataAPI.hpp>
 
 using namespace geode::prelude;
@@ -14,40 +14,32 @@ class $modify(CommentCell) {
 		}
 	}
 
-	void updateColor(GJComment* comm) {
-		auto color = user_data::get<ccColor3B>(comm, "camila314.comment-color");
-
-		if (color.isOk()) {
-			if (auto node = this->getChildByIDRecursive("comment-text-area")) {
-				reinterpret_cast<TextArea*>(node)->colorAllLabels(color.unwrap());
-			}
-
-			if (auto node = this->getChildByIDRecursive("comment-text-label")) {
-				reinterpret_cast<CCLabelBMFont*>(node)->setColor(color.unwrap());
-			}
-
-			if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-area")) {
-				log::info("yeah!!!");
-				typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
-			}
-
-			if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-label")) {
-				log::info("yeah!!!");
-				typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
-			}
-		}
-	}
-
 	void loadFromComment(GJComment* comm) {
 		CommentCell::loadFromComment(comm);
 
-		if (user_data::contains(comm, "camila314.comment-color")) {
-			updateColor(comm);
-		} else {
-			this->addEventListener<user_data::CommentFilter>([this](GJComment* comm) {
-				updateColor(comm);
-			}, comm->m_accountID);
-		}
+		user_data::handleCommentCell(this, [this](GJComment* comm) {
+			auto color = user_data::get<ccColor3B>(comm, "camila314.comment-color");
+
+			if (color.isOk()) {
+				if (auto node = this->getChildByIDRecursive("comment-text-area")) {
+					reinterpret_cast<TextArea*>(node)->colorAllLabels(color.unwrap());
+				}
+
+				if (auto node = this->getChildByIDRecursive("comment-text-label")) {
+					reinterpret_cast<CCLabelBMFont*>(node)->setColor(color.unwrap());
+				}
+
+				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-area")) {
+					log::info("yeah!!!");
+					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
+				}
+
+				if (auto node = this->getChildByIDRecursive("prevter.comment_emojis/comment-text-label")) {
+					log::info("yeah!!!");
+					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
+				}
+			}
+		});
 	}
 };
 
