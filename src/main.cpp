@@ -1,8 +1,6 @@
 #include <Geode/Geode.hpp>
+#include <hiimjasmine00.user_data_api/include/Events.hpp>
 #include <hiimjasmine00.user_data_api/include/UserDataAPI.hpp>
-#include <Geode/utils/web.hpp>
-#include <Geode/utils/async.hpp>
-#include <chrono>
 
 using namespace geode::prelude;
 using namespace geode::event::v2;
@@ -19,15 +17,8 @@ class $modify(CommentCell) {
 	void loadFromComment(GJComment* comm) {
 		CommentCell::loadFromComment(comm);
 
-		int id = comm->m_accountID;
-		std::string url = std::string("https://playerdata.hiimjasmine00.com/v2/") + std::to_string(id);
-
-		this->retain();
-		web::WebRequest().timeout(std::chrono::seconds(3)).get(url).listen([id, this](auto out) {
-			auto color = out->json()
-				.andThen([id](matjson::Value k) { return k.get(std::to_string(id)).copied(); })
-				.andThen([](auto k) { return k.get("camila314.comment-color").copied(); })
-				.andThen([](auto k) { return k.template as<ccColor3B>(); });
+		user_data::handleCommentCell(this, [this](GJComment* comm) {
+			auto color = user_data::get<ccColor3B>(comm, "camila314.comment-color");
 
 			if (color.isOk()) {
 				if (auto node = this->getChildByIDRecursive("comment-text-area")) {
@@ -48,8 +39,6 @@ class $modify(CommentCell) {
 					typeinfo_cast<CCRGBAProtocol*>(node)->setColor(color.unwrap());
 				}
 			}
-
-			this->release();
 		});
 	}
 };
